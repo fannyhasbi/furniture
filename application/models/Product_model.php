@@ -62,12 +62,22 @@ class Product_model extends CI_Model
 
         $result = $this->db->query($queryString);
 
+        if ($result->num_rows() == 0) {
+            $this->truncateSeenProduct();
+            return $this->getSimilarProduct($productID);
+        }
+
         $product = $result->row();
         $product->colors = $this->getProductColor($productID);
 
         $this->saveSeenProduct($product->id);
 
         return $product;
+    }
+
+    private function truncateSeenProduct()
+    {
+        $this->db->truncate('seen_product');
     }
 
     private function saveSeenProduct($productID)
