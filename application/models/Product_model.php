@@ -53,6 +53,10 @@ class Product_model extends CI_Model
                 WHERE product_id = $productID
             )
             AND p.id <> $productID
+            AND p.id NOT IN (
+                SELECT product_id
+                FROM seen_product
+            )
         GROUP BY p.id
         ORDER BY material_matched_count DESC, color_matched_count DESC";
 
