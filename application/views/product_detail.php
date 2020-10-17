@@ -18,6 +18,8 @@
                 <li><?= $color ?></li>
             <?php endforeach ?>
         </ul>
+
+        <p>Dimensi : <?= $product->dimension ?></p>
     </div>
 </body>
 </html>
