@@ -3,6 +3,7 @@ CREATE TABLE product (
     name varchar(500) not null,
     price int(11) unsigned not null,
     image varchar(1000) not null,
+    dimension varchar(500) not null,
     material_id int(11) unsigned not null,
     primary key (id),
     foreign key (material_id) references material(id)
@@ -39,3 +40,4 @@ CREATE TABLE seen_product (
 
 alter table product add material_id int(11) unsigned;
 alter table product add foreign key (material_id) references material(id);
+alter table product add dimension varchar(100) not null;
