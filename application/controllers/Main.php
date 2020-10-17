@@ -20,8 +20,6 @@ class Main extends CI_Controller {
         $this->load->model('product_model');
         $data['product'] = $this->product_model->getProductDetail($productID);
 
-        var_dump($data['product']); die;
-
         $this->load->view('product_detail', $data);
     }
 }
