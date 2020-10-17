@@ -29,5 +29,13 @@ CREATE TABLE product_color (
     foreign key (color_id) references color(id)
 )ENGINE=innodb;
 
+CREATE TABLE seen_product (
+    id int(11) unsigned not null auto_increment,
+    product_id int(11) unsigned not null,
+    session_id varchar(100) not null,
+    primary key (id),
+    foreign key (product_id) references product(id)
+)engine=innodb;
+
 alter table product add material_id int(11) unsigned;
 alter table product add foreign key (material_id) references material(id);

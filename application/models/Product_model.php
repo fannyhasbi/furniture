@@ -61,6 +61,19 @@ class Product_model extends CI_Model
         $product = $result->row();
         $product->colors = $this->getProductColor($productID);
 
+        $this->saveSeenProduct($product->id);
+
         return $product;
     }
+
+    private function saveSeenProduct($productID)
+    {
+        $data = array(
+            'product_id' => $productID,
+            'session_id' => 'sess123'
+        );
+
+        $this->db->insert('seen_product', $data);
+    }
+    
 }
