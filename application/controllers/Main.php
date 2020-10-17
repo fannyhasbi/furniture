@@ -2,6 +2,12 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Main extends CI_Controller {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('product_model');
+    }
+
     public function index()
     {
         $this->load->view('main');
@@ -9,7 +15,6 @@ class Main extends CI_Controller {
 
     public function product()
     {
-        $this->load->model('product_model');
         $data['products'] = $this->product_model->getProducts();
 
         $this->load->view('product', $data);
@@ -17,8 +22,8 @@ class Main extends CI_Controller {
 
     public function productDetail($productID)
     {
-        $this->load->model('product_model');
         $data['product'] = $this->product_model->getProductDetail($productID);
+        $data['similar'] = $this->product_model->getSimilarProduct($productID);
 
         $this->load->view('product_detail', $data);
     }
