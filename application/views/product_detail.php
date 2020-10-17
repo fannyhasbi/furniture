@@ -19,25 +19,5 @@
             <?php endforeach ?>
         </ul>
     </div>
-
-    <hr />
-
-    <div>
-        <h3>Produk Serupa</h3>
-
-        <hh4><?= $similar->name ?></h4>
-        <p>Rp <?= $similar->price ?></p>
-
-        <img src="<?= $similar->image ?>" width="500" height="auto" />
-
-        <div>
-            <p>Warna</p>
-            <ul>
-                <?php foreach ($similar->colors as $color): ?>
-                    <li><?= $color ?></li>
-                <?php endforeach ?>
-            </ul>
-        </div>
-    </div>
 </body>
 </html>

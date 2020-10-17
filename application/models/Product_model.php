@@ -3,28 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Product_model extends CI_Model
 {
-    public function __construct()
-    {
-        date_default_timezone_set('Asia/Jakarta');
-    }
-
-    public function getProducts()
-    {
-        $query = $this->db->get('product');
-
-        return $query->result();
-    }
-
-    public function getProductDetail($productID)
-    {
-        $query = $this->db->get_where('product', ['id' => $productID]);
-
-        $product = $query->row();
-        $product->colors = $this->getProductColor($productID);
-
-        return $product;
-    }
-
     private function getProductColor($productID)
     {
         $this->db->select('c.name');
@@ -36,13 +14,14 @@ class Product_model extends CI_Model
         return array_map('current', $result);
     }
 
-    public function getSimilarProduct($productID)
+    public function getProduct()
     {
+        $viennaID = 1;
         $queryString = "SELECT p.*, COUNT(*) AS color_matched_count, 
             CASE WHEN p.material_id = (
                 SELECT material_id
                 FROM product
-                WHERE id = $productID
+                WHERE id = $viennaID
             ) THEN 1 ELSE 0 END AS material_matched_count
         FROM product p
         INNER JOIN product_color pc
@@ -50,9 +29,9 @@ class Product_model extends CI_Model
         WHERE pc.color_id IN (
                 SELECT color_id
                 FROM product_color
-                WHERE product_id = $productID
+                WHERE product_id = $viennaID
             )
-            AND p.id <> $productID
+            AND p.id <> $viennaID
             AND p.id NOT IN (
                 SELECT product_id
                 FROM seen_product
@@ -64,11 +43,11 @@ class Product_model extends CI_Model
 
         if ($result->num_rows() == 0) {
             $this->truncateSeenProduct();
-            return $this->getSimilarProduct($productID);
+            return $this->getProduct($viennaID);
         }
 
         $product = $result->row();
-        $product->colors = $this->getProductColor($productID);
+        $product->colors = $this->getProductColor($viennaID);
 
         $this->saveSeenProduct($product->id);
 
