@@ -19,6 +19,7 @@
             <?php endforeach ?>
         </ul>
 
+        <p>Material : <?= $product->material ?></p>
         <p>Dimensi : <?= $product->dimension ?></p>
     </div>
 </body>

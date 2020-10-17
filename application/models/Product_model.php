@@ -14,6 +14,17 @@ class Product_model extends CI_Model
         return array_map('current', $result);
     }
 
+    private function getProductMaterial($productID)
+    {
+        $this->db->select('m.name');
+        $this->db->from('material m');
+        $this->db->join('product p', 'p.material_id = m.id');;
+        $this->db->where('p.id', $productID);
+        $result = $this->db->get()->row();
+
+        return $result->name;
+    }
+
     public function getProduct()
     {
         $viennaID = 1;
@@ -48,6 +59,7 @@ class Product_model extends CI_Model
 
         $product = $result->row();
         $product->colors = $this->getProductColor($product->id);
+        $product->material = $this->getProductMaterial($product->id);
 
         $this->saveSeenProduct($product->id);
 
