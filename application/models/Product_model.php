@@ -47,7 +47,7 @@ class Product_model extends CI_Model
         }
 
         $product = $result->row();
-        $product->colors = $this->getProductColor($viennaID);
+        $product->colors = $this->getProductColor($product->id);
 
         $this->saveSeenProduct($product->id);
 
